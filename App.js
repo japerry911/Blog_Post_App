@@ -17,6 +17,8 @@ const App = createAppContainer(navigator);
 
 export default () => {
   return (
-    <App />
+    <BlogProvider>
+      <App />
+    </BlogProvider>
   );
 };
