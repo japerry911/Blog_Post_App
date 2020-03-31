@@ -1,10 +1,9 @@
-import React, { createContext, useReducer } from 'react';
 import createDataContext from './createDataContext';
 
 const blogReducer = (state, action) => {
     switch (action.type) {
         case 'add_blog_post':
-            return [...state, { id: Math.floor(Math.random() * 99999), title: `Blog Post #${state.length + 1}`}];
+            return [...state, { id: Math.floor(Math.random() * 99999).toString(), title: `Blog Post #${state.length + 1}`}];
         
         case 'delete_blog_post':
             return state.filter(post => post.id !== action.payload);

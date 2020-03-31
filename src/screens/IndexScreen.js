@@ -16,21 +16,25 @@ const IndexScreen = ({ navigation }) => {
             />
             <FlatList 
                 data={state}
-                keyExtractor={post => post.title}
+                keyExtractor={post => post.id}
                 renderItem={({ item }) => {
-                return (
-                    <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
-                        <View style={styles.rowStyle}>
-                            <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
-                            <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                                <FontAwesome 
-                                    name='trash' 
-                                    style={styles.iconStyle}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </TouchableOpacity>
-                );
+                    return (
+                        <TouchableOpacity 
+                            onPress={() => navigation.navigate('Show', { id: item.id })}
+                        >
+                            <View style={styles.rowStyle}>
+                                <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
+                                <TouchableOpacity 
+                                    onPress={() => deleteBlogPost(item.id)}
+                                >
+                                    <FontAwesome 
+                                        name='trash-o' 
+                                        style={styles.iconStyle}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                    );
                 }}
             />
         </View>
@@ -41,16 +45,16 @@ const styles = StyleSheet.create({
     rowStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 20,
         borderBottomWidth: 1,
         borderColor: 'gray',
+        paddingVertical: 20,
         paddingHorizontal: 10
     },
     titleStyle: {
         fontSize: 18
     },
     iconStyle: {
-        fontSize: 24
+        fontSize: 36
     }
 });
 
