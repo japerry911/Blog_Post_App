@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons';
 
 const IndexScreen = () => {
     const blogContext = useContext(BlogContext);
 
-    const { state, addBlogPost } = blogContext;
+    const { state, addBlogPost, deleteBlogPost } = blogContext;
 
     return (
         <View>
@@ -20,11 +20,13 @@ const IndexScreen = () => {
                 renderItem={({ item }) => {
                 return (
                     <View style={styles.rowStyle}>
-                        <Text style={styles.titleStyle}>{item.title}</Text>
-                        <FontAwesome 
-                            name='trash' 
-                            style={styles.iconStyle}
-                        />
+                        <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
+                        <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                            <FontAwesome 
+                                name='trash' 
+                                style={styles.iconStyle}
+                            />
+                        </TouchableOpacity>
                     </View>
                 );
                 }}
