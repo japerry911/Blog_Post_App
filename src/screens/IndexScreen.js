@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'reac
 import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons';
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
     const blogContext = useContext(BlogContext);
 
     const { state, addBlogPost, deleteBlogPost } = blogContext;
@@ -16,39 +16,45 @@ const IndexScreen = () => {
             />
             <FlatList 
                 data={state}
-                keyExtractor={post => post.title}
+                keyExtractor={post => post.id}
                 renderItem={({ item }) => {
-                return (
-                    <View style={styles.rowStyle}>
-                        <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
-                        <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                            <FontAwesome 
-                                name='trash' 
-                                style={styles.iconStyle}
-                            />
+                    return (
+                        <TouchableOpacity 
+                            onPress={() => navigation.navigate('Show', { id: item.id })}
+                        >
+                            <View style={styles.rowStyle}>
+                                <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
+                                <TouchableOpacity 
+                                    onPress={() => deleteBlogPost(item.id)}
+                                >
+                                    <FontAwesome 
+                                        name='trash-o' 
+                                        style={styles.iconStyle}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </TouchableOpacity>
-                    </View>
-                );
+                    );
                 }}
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     rowStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 20,
         borderBottomWidth: 1,
         borderColor: 'gray',
+        paddingVertical: 20,
         paddingHorizontal: 10
     },
     titleStyle: {
         fontSize: 18
     },
     iconStyle: {
-        fontSize: 24
+        fontSize: 36
     }
 });
 
