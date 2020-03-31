@@ -1,19 +1,15 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation }) => {
     const blogContext = useContext(BlogContext);
 
-    const { state, addBlogPost, deleteBlogPost } = blogContext;
+    const { state, deleteBlogPost } = blogContext;
 
     return (
         <View>
-            <Button
-                title='Add Blog Post'
-                onPress={addBlogPost}
-            />
             <FlatList 
                 data={state}
                 keyExtractor={post => post.id}
