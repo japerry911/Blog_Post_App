@@ -12,3 +12,25 @@ Frontend/web-report/
 
 # macOS
 .DS_Store
+
+# Ignore bundler config.
+Backend/.bundle
+
+# Ignore the default SQLite database.
+Backend/db/*.sqlite3
+Backend/db/*.sqlite3-journal
+Backend/db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles.
+Backend/log/*
+Backend/tmp/*
+Backend/log/.keep
+Backend/tmp/.keep
+
+# Ignore uploaded files in development.
+Backend/storage/*
+Backend/storage/.keep
+Backend/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+Backend/config/master.key
