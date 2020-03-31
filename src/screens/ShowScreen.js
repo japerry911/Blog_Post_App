@@ -9,7 +9,7 @@ const ShowScreen = ({ navigation }) => {
 
     return (
         <View>
-            <Text>{blogPost === undefined ? null : blogPost.title}</Text>
+            <Text>{blogPost === undefined ? null : blogPost.content}</Text>
         </View>
     );
 };
