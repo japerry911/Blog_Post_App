@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'reac
 import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome } from '@expo/vector-icons';
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
     const blogContext = useContext(BlogContext);
 
     const { state, addBlogPost, deleteBlogPost } = blogContext;
@@ -19,21 +19,23 @@ const IndexScreen = () => {
                 keyExtractor={post => post.title}
                 renderItem={({ item }) => {
                 return (
-                    <View style={styles.rowStyle}>
-                        <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
-                        <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                            <FontAwesome 
-                                name='trash' 
-                                style={styles.iconStyle}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
+                        <View style={styles.rowStyle}>
+                            <Text style={styles.titleStyle}>{item.title} - {item.id}</Text>
+                            <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                                <FontAwesome 
+                                    name='trash' 
+                                    style={styles.iconStyle}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableOpacity>
                 );
                 }}
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     rowStyle: {
