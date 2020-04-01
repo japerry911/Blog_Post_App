@@ -3,28 +3,31 @@ import railsServer from '../api/railsServer';
 import axios from 'axios';
 
 const blogReducer = (state, action) => {
-    switch (action.type) {
-        case 'delete_blog_post':
-            return state.filter(post => post.id !== action.payload);
-        
+    switch (action.type) {        
         case 'edit_blog_post':
             return state.map(post => post.id === action.payload.id ? action.payload : post);
 
         case 'get_blog_posts':
             return action.payload;
 
-        case 'create_blog_post':
-            return [...state, { id: action.payload.id, title: action.payload.title, content: action.payload.content }];
+        case 'delete_blog_post':
+            return state.filter(blogpost => blogpost.id !== action.payload.id);
 
         default:
             return state;
     }
 };
 
-const createBlogPost = dispatch => {
+const deleteBlogPost = dispatch => {
+    return async id => {
+        await railsServer.delete(`/blogposts/${id}`);
+        dispatch({ type: 'delete_blog_post', payload: { id } });
+    };
+};
+
+const createBlogPost = () => {
     return async (title, content, callback) => {
-        const response = await railsServer.post('/blogposts', {  title, content });
-        dispatch({ action: 'create_blog_post', payload: response.data });
+        await railsServer.post('/blogposts', {  title, content });
         callback();
     };
 };
@@ -36,11 +39,11 @@ const getBlogPosts = dispatch => {
     };  
 };
 
-const deleteBlogPost = dispatch => {
+/*const deleteBlogPost = dispatch => {
     return id => {
         dispatch({ type: 'delete_blog_post', payload: id })
     };
-};
+};*/
 
 const editBlogPost = dispatch => {
     return (id, title, content, callback) => {

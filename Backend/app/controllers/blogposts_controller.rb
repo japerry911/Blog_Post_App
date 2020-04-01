@@ -1,20 +1,26 @@
 class BlogpostsController < ApplicationController
     def index
-        blogposts = Blogpost.all 
+        @blogposts = Blogpost.all 
 
-        render json: blogposts 
+        render json: @blogposts 
     end
 
     def show
-        blogpost = Blogpost.find(params[:id])
+        @blogpost = Blogpost.find(params[:id])
 
-        render json: blogpost
+        render json: @blogpost
     end
 
     def create
-        new_blogpost = Blogpost.create(blogpost_params)
+        @new_blogpost = Blogpost.create(blogpost_params)
 
-        render json: new_blogpost
+        render json: @new_blogpost
+    end
+
+    def destroy
+        @blogpost_to_destroy = Blogpost.find(params[:id])
+
+        @blogpost_to_destroy.destroy
     end
 
     private
