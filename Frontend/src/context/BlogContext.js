@@ -39,17 +39,12 @@ const getBlogPosts = dispatch => {
     };  
 };
 
-/*const deleteBlogPost = dispatch => {
-    return id => {
-        dispatch({ type: 'delete_blog_post', payload: id })
-    };
-};*/
-
 const editBlogPost = dispatch => {
-    return (id, title, content, callback) => {
-        dispatch({ type: 'edit_blog_post', payload: { id, title, content }});
+    return async (id, title, content, callback) => {
+        await railsServer.put(`/blogposts/${id}`, { title, content });        
+        dispatch({ type: 'edit_blog_post', payload: { id, title, content } });
         callback();
-    }
+    };
 };
 
 export const { Context, Provider } = createDataContext(blogReducer, { deleteBlogPost, editBlogPost, getBlogPosts, createBlogPost }, 
