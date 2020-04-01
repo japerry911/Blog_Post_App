@@ -1,4 +1,6 @@
 import createDataContext from './createDataContext';
+import railsServer from '../api/railsServer';
+import axios from 'axios';
 
 const blogReducer = (state, action) => {
     switch (action.type) {
@@ -15,9 +17,19 @@ const blogReducer = (state, action) => {
         case 'edit_blog_post':
             return state.map(post => post.id === action.payload.id ? action.payload : post);
 
+        case 'get_blog_posts':
+            return action.payload;
+
         default:
             return state;
     }
+};
+
+const getBlogPosts = dispatch => {
+    return async () => {
+        const response = await railsServer.get('/blogposts');
+        dispatch({ type: 'get_blog_posts', payload: response.data });
+    };  
 };
 
 const addBlogPost = dispatch => {
@@ -40,5 +52,5 @@ const editBlogPost = dispatch => {
     }
 };
 
-export const { Context, Provider } = createDataContext(blogReducer, { addBlogPost, deleteBlogPost, editBlogPost }, 
-    [{ title: 'Test Blog Post Title', content: 'Test Blog Post Content', id: '2304924' }]);
+export const { Context, Provider } = createDataContext(blogReducer, { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts }, 
+    [{ title: 'Test Blog Post Title', content: 'Test Blog Post Content', id: '0' }]);

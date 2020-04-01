@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Context as BlogContext } from '../context/BlogContext';
 import { FontAwesome, Feather } from '@expo/vector-icons';
@@ -6,7 +6,11 @@ import { FontAwesome, Feather } from '@expo/vector-icons';
 const IndexScreen = ({ navigation }) => {
     const blogContext = useContext(BlogContext);
 
-    const { state, deleteBlogPost } = blogContext;
+    const { state, deleteBlogPost, getBlogPosts } = blogContext;
+
+    useEffect(() => {
+        getBlogPosts();
+    }, []);
 
     return (
         <View>
