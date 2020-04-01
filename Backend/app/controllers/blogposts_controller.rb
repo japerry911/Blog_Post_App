@@ -23,6 +23,12 @@ class BlogpostsController < ApplicationController
         @blogpost_to_destroy.destroy
     end
 
+    def update
+        @blogpost_to_update = Blogpost.find(params[:id])
+
+        @blogpost_to_update.update(blogpost_params)
+    end
+
     private
 
     def blogpost_params
