@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :blogposts, only: [:index]
+  resources :blogposts, only: [:index, :create]
 end

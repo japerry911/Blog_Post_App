@@ -10,6 +10,16 @@ const IndexScreen = ({ navigation }) => {
 
     useEffect(() => {
         getBlogPosts();
+
+        const listener = navigation.addListener('didFocus', () => {
+            getBlogPosts();
+        });
+
+        // Invoked only if IndexScreen instance stops showing on screen fully 
+        // Prevents a memory leak
+        return () => {
+            listener.remove();
+        };
     }, []);
 
     return (
