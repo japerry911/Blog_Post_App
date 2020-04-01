@@ -4,13 +4,6 @@ import axios from 'axios';
 
 const blogReducer = (state, action) => {
     switch (action.type) {
-        case 'add_blog_post':
-            return [...state, {
-                id: Math.floor(Math.random() * 99999).toString(), 
-                title: action.payload.title,
-                content: action.payload.content 
-            }];
-        
         case 'delete_blog_post':
             return state.filter(post => post.id !== action.payload);
         
@@ -20,9 +13,20 @@ const blogReducer = (state, action) => {
         case 'get_blog_posts':
             return action.payload;
 
+        case 'create_blog_post':
+            return [...state, { id: action.payload.id, title: action.payload.title, content: action.payload.content }];
+
         default:
             return state;
     }
+};
+
+const createBlogPost = dispatch => {
+    return async (title, content, callback) => {
+        const response = await railsServer.post('/blogposts', {  title, content });
+        dispatch({ action: 'create_blog_post', payload: response.data });
+        callback();
+    };
 };
 
 const getBlogPosts = dispatch => {
@@ -30,13 +34,6 @@ const getBlogPosts = dispatch => {
         const response = await railsServer.get('/blogposts');
         dispatch({ type: 'get_blog_posts', payload: response.data });
     };  
-};
-
-const addBlogPost = dispatch => {
-    return (title, content, callback) => {
-        dispatch({ type: 'add_blog_post', payload: { title, content }});
-        callback();
-    };
 };
 
 const deleteBlogPost = dispatch => {
@@ -52,5 +49,5 @@ const editBlogPost = dispatch => {
     }
 };
 
-export const { Context, Provider } = createDataContext(blogReducer, { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts }, 
+export const { Context, Provider } = createDataContext(blogReducer, { deleteBlogPost, editBlogPost, getBlogPosts, createBlogPost }, 
     [{ title: 'Test Blog Post Title', content: 'Test Blog Post Content', id: '0' }]);
