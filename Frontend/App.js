@@ -6,14 +6,16 @@ import IndexScreen from './src/screens/IndexScreen';
 import ShowScreen from './src/screens/ShowScreen';
 import CreationScreen from './src/screens/CreationScreen';
 import EditScreen from './src/screens/EditScreen';
+import HomeScreen from './src/screens/HomeScreen';
 
 const navigator = createStackNavigator({
   Index: IndexScreen,
   Show: ShowScreen,
   Creation: CreationScreen,
-  Edit: EditScreen
+  Edit: EditScreen,
+  Home: HomeScreen
 }, {
-  initialRouteName: 'Index',
+  initialRouteName: 'Home',
   defaultNavigationOptions: {
     title: 'Skylord\'s Blogs',
   }
